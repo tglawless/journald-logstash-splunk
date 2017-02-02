@@ -1,0 +1,29 @@
+---
+# The tasks below will install docker, start and enable the service.
+
+- name: Install Docker
+  shell: curl -fsSL https://get.docker.com/ | sh
+  args:
+    warn: no
+
+- name: Create Docker Service Dropin Directory
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: 0755
+
+- name: Create Docker Service Dropin
+  copy: 
+    src: docker.conf
+    dest: /etc/systemd/system/docker.service.d/docker.conf
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Start and enable Docker
+  systemd:
+    name: docker
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+

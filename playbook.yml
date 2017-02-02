@@ -1,0 +1,6 @@
+
+- hosts: localhost
+  roles:
+  - role: install-docker-with-logging-config
+  - role: journald-to-json-file
+  - role: deploy-logstash-container

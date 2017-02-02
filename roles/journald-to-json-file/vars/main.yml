@@ -1,0 +1,4 @@
+
+journald_json_output_directory: /var/log/journald-json
+journald_json_output_file: journald
+journald_json_output_rotate: 1

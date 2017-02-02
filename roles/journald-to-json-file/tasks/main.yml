@@ -1,0 +1,26 @@
+---
+# The tasks below will install docker, start and enable the service.
+
+- name: Create Journald to JSON Service
+  template: 
+    src: journald-json.service
+    dest: /etc/systemd/system/journald-json.service
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Start and Enable Journald to JSON Service
+  systemd:
+    name: journald-json
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+
+- name: Configure logrotate for Journald to JSON Service Output
+  template:
+    src: journald-json-logrotate.conf
+    dest: /etc/logrotate.d/journald-json
+    owner: root
+    group: root
+    mode: 0644
+

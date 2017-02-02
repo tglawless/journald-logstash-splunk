@@ -1,0 +1,10 @@
+[Unit]
+Description=Write Journald Log Stream to Disk
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/mkdir -p {{journald_json_output_directory}}
+ExecStart=/bin/bash -c '/usr/bin/journalctl -f -n 0 -o json > {{journald_json_output_directory}}/{{journald_json_output_file}}'
+
+[Install]
+WantedBy=multi-user.target

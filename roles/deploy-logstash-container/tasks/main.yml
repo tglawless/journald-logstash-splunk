@@ -1,0 +1,9 @@
+---
+# The tasks below will install docker, start and enable the service.
+
+- name: Build Logstash Image
+  shell: "docker build --build-arg SPLUNK_HOST={{ SPLUNK_HOST }} -t journald-logstash-splunk/logstash:latest /vagrant/logstash" 
+
+- name: "Start Logstash Container"
+  shell: "docker run -d -p 9600:9600 -e SPLUNK_HOST={{SPLUNK_HOST}} -e SPLUNK_TOKEN={{SPLUNK_TOKEN}} --name logstash -v /var/journald-json:/var/journald-json --log-opt tag=\"{{ '{{' }}.ImageName{{ '}}' }}\" journald-logstash-splunk/logstash:latest -f /etc/logstash/conf.d"
+  
